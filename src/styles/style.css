@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@800&family=Josefin+Sans:wght@100&family=Nova+Round&display=swap');
+
+body {
+    margin: 1rem auto;
+    max-width: 1200px;
+    font-family: 'Dosis', sans-serif;;
+  }
+
+input {
+    width: 150px;
+    height: 20px;
+    margin: 20px;
+    border-radius: 20px;
+}
+
+button {
+    width: 70px;
+    height: 20px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+li {
+    margin-bottom: 30px;
+}
+
+h1{
+    text-align: center;
+    color: brown;
+    margin-bottom: 50px;
+}

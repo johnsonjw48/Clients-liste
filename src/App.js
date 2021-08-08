@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import Client from './Composants/Client';
-import CFormulaire from './Composants/Formulaire';
+
 
 class App extends Component {
 
   state = {
-    clients: [
-      {id: 1, nom: "JOHNSON", prenom:"James", age: "24", username: "johnsonjw48"},
-      {id: 2, nom: "PAPA", prenom:"TATA", age: "30", username: "tatajw48"},
-      {id: 3, nom: "MAMAN", prenom:"TOTO", age: "24", username: "totojw48"},
-     
-    ],
-    nouveauClient: ''
-
-  };
+    clients: [],
+    id:'', nom:'', prenom:'', age:'', username:''
+};
 
     handleDelete = (id) => {
       const client1= this.state.clients.slice();
@@ -24,53 +18,91 @@ class App extends Component {
       this.setState({clients: client1})
     };
 
+    handleUpdate = (id) => {
+     
+      const client1= this.state.clients.slice();
+      const index= client1.findIndex((client1)=>{
+        return client1.id===id;
+      })
 
+      console.log(index);
+      
+
+    }
+
+
+
+    handleChange = (event)=> {
+
+      const name = event.target.name;
+      
+      this.setState({
+        [name]: event.target.value
+      })
+
+    
+
+    }
+    
+    
     handleSubmit = (event)=>{
+
       event.preventDefault();
 
-      const id= new Date().getTime();
-      const nom = this.state.nouveauClient;
+      let {nom, prenom, age, username}= this.state;
 
-      const client= this.state.clients.slice();
+      const client = {id: new Date().getTime(), nom: nom, prenom: prenom, age : age, username: username};
 
-     
-  }
+      const clients=this.state.clients.slice();
+
+      clients.push(client);
 
 
-    // handleChange = (event)=>{
+      this.setState({
+        clients: clients, nom:'', prenom:'', age:'', username:''
+      })
 
-    //   this.setState({newNom: event.currentTarget.value});
-    //   this.setState({NewPrenom: event.currentTarget.value});
-    //   this.setState({NewAge: event.currentTarget.value});
-    //   this.setState({NewUser: event.currentTarget.value});
+    }
 
-     
-    // }
+
 
     
 
   render() {
-    let {clients,nouveauClient}=this.state;
+    let {clients,nom,prenom,age,username}=this.state;
     return (
       <div>
           <h1>Liste de Clients</h1>
-          <ul>
+          <ol>
             {
                clients.map((item)=>(
-               <Client details={item} onDelete={this.handleDelete} />
+               <Client details={item} onDelete={this.handleDelete} onUpdate={this.handleUpdate} onChange={this.handleChange} nom={nom} prenom={prenom} age={age} username={username}/>
               ))
             }
-          </ul>
+          </ol>
 
           <h2>Ajouter un client</h2>
 
-          <form >
-            <input type="text" placeholder="nom" value={nouveauClient} />
-            <input type="text" placeholder="prenom" value={nouveauClient} />
-            <input type="text" placeholder="age" value={nouveauClient} />
-            <input type="text" placeholder="username" value={nouveauClient} />
-            <button>Add</button>
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <label htmlFor="nom">Nom</label>
+              <input type="text" placeholder="" value={nom} onChange={this.handleChange} name="nom"/>
+            </div>
+            <div>
+              <label htmlFor="prenom">Prenom</label>
+              <input type="text" placeholder="" value={prenom} onChange={this.handleChange} name= "prenom" />
+            </div>
+            <div>
+              <label htmlFor="age">Age</label>
+              <input type="number" placeholder="" value={age} onChange={this.handleChange} name= "age" />
+            </div>
+            <div>
+              <label htmlFor="username">Username</label>
+              <input type="text" placeholder="" value={username}  onChange={this.handleChange} name= "username"/>
+            </div>
+            <button >Add</button>
             </form>
+            {/* {JSON.stringify(this.state)} */}
 
       </div>
     );
