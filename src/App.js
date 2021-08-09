@@ -19,12 +19,17 @@ class App extends Component {
     };
 
 
-    handleUpdate = (id) => {
+    handleUpdate = (id, client) => {
       const client1= this.state.clients.slice();
       const index= client1.findIndex((client1)=>{
         return client1.id===id;
       })
-      console.log(index);
+      
+      client1[index]= client;
+
+      this.setState({
+        clients: client1
+      })
     }
 
     handleAddClient = (client)=>{
@@ -40,20 +45,20 @@ class App extends Component {
     
 
   render() {
-    let {clients,nom,prenom,age,username}=this.state;
+    let {clients}=this.state;
     return (
       <div>
           <h1>Liste de Clients</h1>
           <ol>
             {
                clients.map((item)=>(
-               <Client details={item} onDelete={this.handleDelete} onUpdate={this.handleUpdate} onChange={this.handleChange} nom={nom} prenom={prenom} age={age} username={username}/>
+               <Client details={item} onDelete={this.handleDelete}   onUp={this.handleUpdate}/>
               ))
             }
           </ol>
 
           <h2>Ajouter un client</h2>
-            <Add onAdd={this.handleAddClient}/>
+            <Add onAdd={this.handleAddClient}  onDelete={this.handleUpdate}/>
 
       </div>
     );
